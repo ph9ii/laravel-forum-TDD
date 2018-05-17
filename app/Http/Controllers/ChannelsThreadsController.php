@@ -17,10 +17,12 @@ class ChannelsThreadsController extends Controller
     public function index(Channel $channel)
     {
         if($channel->exists) {
-            $threads = $channel->threads()->latest()->get();
+            $threads = $channel->threads()->latest();
         } else {
-            $threads = Thread::latest()->get();
+            $threads = Thread::latest();
         }
+        
+        $threads = $threads->get();
         
         return view('threads.index', compact('threads'));
     }

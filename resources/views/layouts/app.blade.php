@@ -34,7 +34,32 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                        <a href="{{ route('threads.index') }}">All Threads</a>
+                        <li class="nav-item">
+                            <a class="nav-link" href=""></a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Browse
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('threads.index') }}">{{ __('All Threads') }}</a>
+                                @if(Auth::user())
+                                <a class="dropdown-item" href="{{ URL::to('threads?by=').Auth()->user()->name }}">{{ __('My Threads') }}</a>
+                                @endif
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ __('Channels') }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              @foreach($channels as $channel)
+                                <a class="dropdown-item" href="{{ route('threads.channel.index', ['channel' => $channel->slug]) }}">{{ $channel->name }}</a>
+                              @endforeach
+                            </div>
+                        </li>
+
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -44,7 +69,7 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
                         @else
-                            <a class="btn btn-success" href="{{ route('threads.create') }}">Create Thread</a>
+                            <a class="btn btn-outline-success my-2 my-sm-0" href="{{ route('threads.create') }}">Create Thread</a>
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

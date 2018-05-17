@@ -15,7 +15,7 @@
                                 {{ $thread->creator->name }}
                             </a>
                             Posted:
-                            <a href="{{ $thread->path() }}">
+                            <a href="{{ route('threads.show', ['channel' => $thread->channel->slug, 'thread' => $thread->id]) }}">
                              {{ $thread->title }}
                             </a>
                         </h4>
