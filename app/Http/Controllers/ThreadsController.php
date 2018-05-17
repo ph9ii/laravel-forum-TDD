@@ -29,6 +29,7 @@ class ThreadsController extends Controller
         $threads = Thread::latest();
 
         $threads = $threads->filter($filters)->get();
+        
         return view('threads.index', compact('threads'));
     }
 
@@ -110,13 +111,5 @@ class ThreadsController extends Controller
     {
         //
     }
-
-    // if request(by), we should filter by the username
-        // if($username = request('by')) {
-        //     $user = User::where('name', $username)->firstOrFail();
-            
-        //     $threads->where('user_id', $user->id);
-        // }
-        
-        // $threads = $threads->get();
 }
+

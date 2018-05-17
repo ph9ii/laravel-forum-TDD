@@ -19,7 +19,9 @@ abstract class Filters
     }
 
     /**
-     * @param $builder
+     * Apply request by query
+     * 
+     * @param mixed $builder
      * @return mixed
      */
     public function apply($builder)
@@ -31,10 +33,5 @@ abstract class Filters
         }
 
         return $this->builder;
-
-        // if(! $username = $this->request->by) return $builder;
-
-        // return $this->by($username);
-        
     }
 }
