@@ -11,6 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -18,7 +22,18 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
+    <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        .flex-center {
+            display: flex;
+            align-items: center;
+        }
+        .flex {
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -43,6 +58,7 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('threads.index') }}">{{ __('All Threads') }}</a>
+                                <a class="dropdown-item" href="{{ URL::to('threads?popular=1')}}">{{ __('Popular Threads') }}</a>
                                 @if(Auth::user())
                                 <a class="dropdown-item" href="{{ URL::to('threads?by=').Auth()->user()->name }}">{{ __('My Threads') }}</a>
                                 @endif
@@ -98,5 +114,21 @@
             @yield('content')
         </main>
     </div>
+
+    <script type="text/javascript">
+        @if(Session::has('success'))
+            toastr.success("{{ Session::get('success') }}")
+        @endif
+    
+        @if(Session::has('warning'))
+            toastr.warning("{{ Session::get('warning') }}")
+        @endif
+    
+        @if(Session::has('error'))
+            toastr.error("{{ Session::get('error') }}")
+        @endif
+    </script>
+
+    @yield('script')
 </body>
 </html>

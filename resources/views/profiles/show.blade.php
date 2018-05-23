@@ -2,13 +2,21 @@
 
 @section('content')
 <div class="container">
+    <div class="page-header">
+        <h1>
+            {{ $profileUser->name }} 
+        </h1>
+        <small>Since {{ $profileUser->created_at->diffForHumans() }}</small>
+        <hr>
+    </div>
+
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8I">
             <div class="card">
-                <div class="card-header">Forum Threads</div>
+                <div class="card-header">User Threads</div>
 
                 <div class="card-body">
-                   @foreach($threads as $thread)
+                   @foreach($profileUser->threads as $thread)
                     <article>
                         <div class="flex-center">
                             <h4 class="flex">
@@ -38,4 +46,4 @@
         </div>
     </div>
 </div>
-@endsection
+@stop

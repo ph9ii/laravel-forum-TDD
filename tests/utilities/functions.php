@@ -1,11 +1,19 @@
 <?php
 
-function create($class, $attributes = [])
+function create($class, $attributes = [], $times = null)
 {
-    return factory($class)->create($attributes);
+    return factory($class, $times)->create($attributes);
 }
 
-function make($class, $attributes = [])
+/**
+ * Make factory function
+ *
+ * @param collection $class
+ * @param array $attributes
+ * @param int $times
+ * @return void
+ */
+function make($class, $attributes = [], $times = null)
 {
-    return factory($class)->make($attributes);
+    return factory($class, $times)->make($attributes);
 }

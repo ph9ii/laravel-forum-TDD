@@ -8,6 +8,8 @@ abstract class Filters
 {
     protected $request, $builder;
 
+    protected $filters = [];
+
     /**
      * ThreadFilters Constructor
      * 
@@ -28,10 +30,20 @@ abstract class Filters
     {
         $this->builder = $builder;
 
-        if($this->request->has('by')) {
-            return $this->by($this->request->by);
-        }
+        collect($this->getFilters())
+            ->filter(function ($value, $filter) {
+                return method_exists($this, $filter);
+            })
+            ->each(function ($value, $filter) {
+                $this->$filter($value);
+            });
 
         return $this->builder;
+    }
+
+    public function getFilters()
+    {
+        // request->intersect is deprecated, we use array_filter instead.
+        return collect(array_filter($this->request->only($this->filters)));
     }
 }

@@ -38,7 +38,7 @@ class CreateThreadTest extends TestCase
         // Hit endpoint, to create a new thread
         $thread = make('App\Thread');
         
-        $response = $this->post('/threads/', $thread->toArray());
+        $response = $this->post('threads/', $thread->toArray());
 
         // Then, we visit the thread page
         // We should see the thread

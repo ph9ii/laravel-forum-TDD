@@ -8,7 +8,6 @@ use App\Channel;
 use Illuminate\Http\Request;
 use App\Filters\ThreadFilters;
 
-
 class ThreadsController extends Controller
 {
     public function __construct()
@@ -24,11 +23,16 @@ class ThreadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(ThreadFilters $filters)
-    {   
-        
-        $threads = Thread::latest();
+    {
+        // $threads = Thread::with(['channel', 'creator'])->latest()->filter($filters)->get();
 
-        $threads = $threads->filter($filters)->get();
+        $threads = Thread::latest()->filter($filters)->get();
+
+        if(request()->wantsJson()) {
+            return $threads;
+        }
+
+        // dd(Thread::latest()->get()->toSql());
         
         return view('threads.index', compact('threads'));
     }
@@ -75,7 +79,10 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
-        return view('threads.show', compact('thread'));
+        return view('threads.show', [
+            'thread' => $thread,
+            'replies' => $thread->replies()->paginate(20)
+        ]);
     }
 
     /**
